@@ -73,7 +73,7 @@ color:rgb(170, 0, 127);</string>
    <widget class="QPushButton" name="pushButtonopen">
     <property name="geometry">
      <rect>
-      <x>1230</x>
+      <x>1220</x>
       <y>460</y>
       <width>301</width>
       <height>29</height>
@@ -400,8 +400,8 @@ color:rgb(170, 0, 127);</string>
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>1220</x>
-      <y>450</y>
+      <x>1230</x>
+      <y>500</y>
       <width>301</width>
       <height>20</height>
      </rect>

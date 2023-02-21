@@ -962,9 +962,67 @@ void MainWindow::on_pushButtonopen_clicked()
     ui->NewDate->hide();
     ui->output->setReadOnly(true);
 
-    fileName = QFileDialog::getOpenFileName(this, "Открытие документа", "C:\\", "Текстовые файлы (*.txt);");
+    QString nameFile;
 
-    ui->label_4->setText(fileName);
+    nameFile = QFileDialog::getOpenFileName(this, "Открытие документа", "C:\\", "Текстовые файлы (*.txt);");
+
+    QFile file(nameFile);
+    QString str;
+    int result = 0;
+
+    try {
+        file.open(QIODevice::ReadOnly);
+
+        if(file.size() == 0) {
+            fileName = nameFile;
+            ui->label_4->setText(fileName);
+        }
+
+        while(!file.atEnd()) {
+    str = file.readLine().trimmed();
+    result = 0;
+    if (str.size() != 0 || (str[0].isDigit() && str[1].isDigit() && str[3].isDigit() && str[4].isDigit() && str[6].isDigit() && str[7].isDigit() && str[8].isDigit() && str[9].isDigit()) || (str[2] == '.') || (str[5] == '.') || (!str[10].isLetterOrNumber())) {
+        result++;
+    }
+
+    if (((str.mid(0, 2)).toInt() > 0 && (str.mid(0, 2)).toInt() < 32 && (str.mid(3, 2)).toInt() > 0 && (str.mid(3, 2)).toInt() < 13 && (str.mid(6, 4)).toInt() > 0 && (str.mid(6, 4)).toInt() < 10000)) {
+         result++;
+    }
+
+    if (!((str.mid(0, 2)).toInt() > 30 && ((str.mid(3, 2)).toInt() == 4 || str.mid(3, 2).toInt() == 6 || str.mid(3, 2).toInt() == 9 || str.mid(3, 2).toInt() == 11))) {
+       result++;
+    }
+
+    if (!((str.mid(0, 2)).toInt() > 31 && ((str.mid(3, 2)).toInt() == 1 || str.mid(3, 2).toInt() == 3 || str.mid(3, 2).toInt() == 5 || str.mid(3, 2).toInt() == 7 || str.mid(3, 2).toInt() == 8 || str.mid(3, 2).toInt() == 10 || str.mid(3, 2).toInt() == 12))) {
+         result++;
+    }
+
+    if (!(str.mid(0, 2).toInt() > 29 && str.mid(3, 2).toInt() == 2)) {
+    result++;
+    }
+
+    if (!(str.mid(0, 2).toInt() > 28 && str.mid(3, 2).toInt() == 2 && str.mid(6, 4).toInt() % 4 != 0)) {
+         result++;
+    }
+
+    if(result == 6){
+      fileName = nameFile;
+      ui->label_4->setText(fileName);
+    }
+
+    if(result < 6) {
+         QMessageBox::critical(this, "Внимание!", "Выбранный вами файл не может быть использован\nв качестве источника ресурсов, так как он \nсодержит неподходящие данные");
+         break;
+    }
+
+    }
+    }
+
+    catch (...) {
+         ui->output->setText("ERROR");
+    }
+
+
 }
 
 void MainWindow::on_pushButton_5_clicked()

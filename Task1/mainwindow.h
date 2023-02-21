@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "inputdate.h"
 #include <QDate>
 #include <QFile>
 #include <QByteArray>
@@ -72,7 +71,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    InputDate *input;
 };
 
 class date
