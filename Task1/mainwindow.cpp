@@ -10,6 +10,7 @@
 #include <QChar>
 
 int size = 1, i = 0, co = 0, a = 0;
+int yyy = 0;
 QString fileName = "C:/253506/inputqt.txt";
 date* arr_of_dates = new date[size];
 
@@ -360,7 +361,6 @@ void MainWindow::on_pushButtonadd_clicked()
 
 void MainWindow::on_agreeadd_clicked()
 {
-    int y = 0;
 
     ui->bth->hide();
     ui->textbth->hide();
@@ -402,6 +402,10 @@ void MainWindow::on_agreeadd_clicked()
         QMessageBox::critical(this, "Внимание!", "Формат даты введен некорректно!\nПовторите попытку!");
     }
 
+    else if (str.size() > 10) {
+        QMessageBox::critical(this, "Внимание!", "За 1 раз можно записать лишь одну дату");
+    }
+
     else {
 
     QFile file(fileName);
@@ -412,11 +416,13 @@ void MainWindow::on_agreeadd_clicked()
 else {
 
         daata = QByteArray::fromStdString(str.toStdString());
-        if(y == 0) {
+        if(yyy > 0) {
         file.write("\n" + daata);
-        y++;
         }
-        else  file.write(daata);
+        if(yyy == 0) {
+            file.write(daata);
+           yyy++;
+        }
     }
     }
     QString data = "";

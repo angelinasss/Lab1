@@ -13,7 +13,7 @@
 #include <malloc.h>
 #include <string>
 
-int size = 1, i = 0, co = 0, a = 0, ind, mathp, physicsp, rusp;
+int size = 1, i = 0, co = 0, a = 0, ind, mathp, physicsp, rusp, tt = 0;
 double averp;
 QString Name, spec, fileName = "C:\\FilesForQtLabs\\Students.txt";
 Student* students = new Student[size];
@@ -586,7 +586,11 @@ void MainWindow::on_save_clicked()
        file.open(QIODevice::Append);
 
         daata = QByteArray::fromStdString(fio.toStdString());
-        file.write("\n" + daata);
+        if(tt == 0) {
+        file.write(daata);
+        tt++;
+        }
+        else file.write("\n" + daata);
 
         daata = QByteArray::fromStdString(speciality.toStdString());
 
@@ -1612,7 +1616,7 @@ void MainWindow::on_choicepath_clicked()
 
         if(file.size() == 0) {
             fileName = nameFile;
-            ui->label_4->setText(fileName);
+            ui->FilePath->setText(fileName);
         }
 
         while(!file.atEnd()) {
